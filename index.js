@@ -45,7 +45,7 @@ app.post('/upload', upload.single('image'), async (req, res) => {
     }
 
     const fileExtension = path.extname(file.originalname);
-    const channelId = process.env.CHENNEL;
+    const channelId = process.env.CHANNEL;
     const channel = await client.channels.fetch(channelId);
 
     const attachment = new AttachmentBuilder(file.path, `file${fileExtension}`);
