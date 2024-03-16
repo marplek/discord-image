@@ -1,5 +1,5 @@
 # 使用官方 Node.js 為基礎鏡像
-FROM node:14
+FROM node:latest
 
 # 設定工作目錄
 WORKDIR /usr/src/app

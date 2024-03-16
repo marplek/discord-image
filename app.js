@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const app = express();
-const port = 3000;
+const port = 3050;
 app.use(cors());
 // Discord bot客户端初始化
 const client = new Client({
