@@ -6,9 +6,14 @@ const path = require('path');
 const { Client, GatewayIntentBits, AttachmentBuilder } = require('discord.js');
 require("dotenv").config();
 
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/');
+        cb(null, uploadsDir);
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -16,12 +21,19 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix + ext);
     }
 });
-
 const upload = multer({ storage: storage });
 
 const app = express();
 const port = 3050;
-app.use(cors());
+const corsOptions = {
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
 // Discord bot客户端初始化
 const client = new Client({
     intents: [
